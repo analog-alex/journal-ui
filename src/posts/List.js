@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { get } from '../api/Api.js'
+import { Get } from '../api/Api.js'
 
 const List = (props) => {
   const [posts, setPosts] = useState([])
 
   useEffect(() => {
-    get('posts')
+    Get('posts')
       .then(res => setPosts(res.data))
       .catch(err => window.alert(`Sorry! There was an error: ${err.message}`))
   }, [])
