@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Post } from '../api/Api.js'
-import { STAGE_ONE } from './Login.js'
+import { STAGE_ONE, STAGE_THREE } from './Login.js'
 
 const Otp = ({ callback, hashId }) => {
   const [otp, setOtp] = useState('')
@@ -9,11 +9,7 @@ const Otp = ({ callback, hashId }) => {
 
   const loginWithOtp = () => {
     Post('/auth/otp', { otp: otp, hashId: hashId })
-      .then(res => {
-        console.log(res)
-        // temporary hack :sad:
-        window.localStorage.setItem('credentials', JSON.stringify(res))
-      })
+      .then(res => callback(STAGE_THREE, res.data))
       .catch(err => {
         window.alert(err)
         callback(STAGE_ONE, {})

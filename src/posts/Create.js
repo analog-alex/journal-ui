@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Post } from '../api/Api.js'
+import { useSelector } from 'react-redux'
+import { AuthPost } from '../api/Api.js'
 
 const Create = (props) => {
   const [post, setPost] = useState({
@@ -8,6 +9,7 @@ const Create = (props) => {
     text: '',
     tags: ['test', 'default']
   })
+  const auth = useSelector(state => state.auth)
 
   const onChangeHandler = event => setPost({
     ...post,
@@ -15,7 +17,8 @@ const Create = (props) => {
   })
 
   const persist = () => {
-    Post('posts', post)
+    console.log(JSON.stringify(auth))
+    AuthPost('posts', post, auth.user.jwt)
       .then(res => window.alert(res.data))
       .catch(err => window.alert(`Sorry! There was an error: ${err.message}`))
   }

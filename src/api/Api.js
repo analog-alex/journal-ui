@@ -11,6 +11,12 @@ const headers = {
 
 // usual REST api methods
 const Get = (url) => axios.get(uri(url))
-const Post = (url, body) => axios.post(uri(url), headers, body)
+const Post = (url, body) => axios.post(uri(url), body, headers)
 
-export { Get, Post }
+const AuthPost = (url, body, auth) => axios.post(
+  uri(url),
+  body,
+  { headers: { ...headers.headers, Authorization: `Bearer ${auth}` } }
+)
+
+export { Get, Post, AuthPost }
